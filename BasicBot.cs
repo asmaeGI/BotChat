@@ -26,6 +26,7 @@ namespace Microsoft.BotBuilderSamples
         public const string HelpIntent = "Help";
         public const string NoneIntent = "None";
         public const string TimeIntent = "Time";
+        public const string ProductIntent = "Product";
 
         /// <summary>
         /// Key in the bot config (.bot file) for the LUIS instance.
@@ -34,6 +35,7 @@ namespace Microsoft.BotBuilderSamples
         public static readonly string LuisConfiguration = "BasicBotLuisApplication";
 
         private readonly IStatePropertyAccessor<GreetingState> _greetingStateAccessor;
+        private readonly IStatePropertyAccessor<ProductState> _productStateAccessor;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
         private readonly UserState _userState;
         private readonly ConversationState _conversationState;
@@ -51,6 +53,7 @@ namespace Microsoft.BotBuilderSamples
             _conversationState = conversationState ?? throw new ArgumentNullException(nameof(conversationState));
 
             _greetingStateAccessor = _userState.CreateProperty<GreetingState>(nameof(GreetingState));
+            _productStateAccessor = _userState.CreateProperty<ProductState>(nameof(ProductState));
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
 
             // Verify LUIS configuration.
@@ -62,6 +65,7 @@ namespace Microsoft.BotBuilderSamples
             Dialogs = new DialogSet(_dialogStateAccessor);
             Dialogs.Add(new GreetingDialog(_greetingStateAccessor, loggerFactory));
             Dialogs.Add(new TimeDialog());
+            Dialogs.Add(new ProductDialog(_productStateAccessor, loggerFactory));
         }
 
         private DialogSet Dialogs { get; set; }
@@ -92,6 +96,7 @@ namespace Microsoft.BotBuilderSamples
 
                 // update greeting state with any entities captured
                 await UpdateGreetingState(luisResults, dc.Context);
+                await UpdateProductState(luisResults, dc.Context);
 
                 // Handle conversation interrupts first.
                 var interrupted = await IsTurnInterruptedAsync(dc, topIntent);
@@ -121,6 +126,9 @@ namespace Microsoft.BotBuilderSamples
                                     break;
                                 case TimeIntent:
                                     await dc.BeginDialogAsync(nameof(TimeDialog));
+                                    break;
+                                case ProductIntent:
+                                    await dc.BeginDialogAsync(nameof(ProductDialog));
                                     break;
                                 case NoneIntent:
                                 default:
@@ -268,6 +276,36 @@ namespace Microsoft.BotBuilderSamples
 
                 // Set the new values into state.
                 await _greetingStateAccessor.SetAsync(turnContext, greetingState);
+            }
+        }
+
+        private async Task UpdateProductState(RecognizerResult luisResult, ITurnContext turnContext)
+        {
+            if (luisResult.Entities != null && luisResult.Entities.HasValues)
+            {
+                // Get latest GreetingState
+                var productState = await _productStateAccessor.GetAsync(turnContext, () => new ProductState());
+                var entities = luisResult.Entities;
+
+                // Supported LUIS Entities
+                string[] productNameEntities = { "productName", "productName_patternAny" };
+
+                // Update any entities
+                // Note: Consider a confirm dialog, instead of just updating.
+                foreach (var name in productNameEntities)
+                {
+                    // Check if we found valid slot values in entities returned from LUIS.
+                    if (entities[name] != null)
+                    {
+                        // Capitalize and set new user name.
+                        var newName = (string)entities[name][0];
+                        productState.Name = char.ToUpper(newName[0]) + newName.Substring(1);
+                        break;
+                    }
+                }
+
+                // Set the new values into state.
+                await _productStateAccessor.SetAsync(turnContext, productState);
             }
         }
     }
