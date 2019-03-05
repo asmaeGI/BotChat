@@ -1,0 +1,61 @@
+{
+  "name": "SqliCustomerServiceBot",
+  "padlock": "2S9dLSnbBKKmfrAhVxNQZw==!eEu2ps8N+u3/QVYMRuczFvtWDrrumnFrUtKsUt5uAErqeb1uhc+xHBx6gdX0QSPG",
+  "version": "2.0",
+  "services": [
+    {
+      "tenantId": "20f62116-4d0c-44ac-8a45-390ca2765601",
+      "subscriptionId": "47516a6e-0e53-4019-9871-3cacea620f8e",
+      "resourceGroup": "CustomerServiceRessources",
+      "serviceName": "SqliCustomerServiceBot",
+      "type": "abs",
+      "name": "SqliCustomerServiceBot",
+      "id": "1"
+    },
+    {
+      "connectionString": "g8N+m2Iqt92Xdcy07Vjmjg==!/QdWub3L3lQz1HapesSP3sdzMOqLXu9cf8u1MtpsHUkIzRiC0qFDOqXK+waXUHLoTmr4o0/jjMjWhW0q6iHHWDZY/tRRX6L+//XPPHedZUOK4P5rKuz+IN3TcYVGEkY4+nzndrOcE+c92znUraCSiIypAE99ryhBFDF2IFeUXP4qkQ1X92d3HFm9OyMnDcN1liYW96M/5Vb1iM6uW84/VocsNNwbtk+t9MfGO8H6aoo=",
+      "tenantId": "20f62116-4d0c-44ac-8a45-390ca2765601",
+      "subscriptionId": "47516a6e-0e53-4019-9871-3cacea620f8e",
+      "resourceGroup": "CustomerServiceRessources",
+      "serviceName": "sqlicustomerservicebotb0",
+      "type": "blob",
+      "id": "2"
+    },
+    {
+      "appId": "",
+      "appPassword": "",
+      "endpoint": "http://localhost:3978/api/messages",
+      "type": "endpoint",
+      "name": "development",
+      "id": "3"
+    },
+    {
+      "appId": "f8a973aa-9929-49c1-96cb-d8cf7e896ed7",
+      "appPassword": "eNh8VMRzq03L5FSBVjEqZw==!b5ywObVHyhkHmAHOGENk/lrcDLdTloQ3XXJXnV5W2iM=",
+      "endpoint": "https://sqlicustomerservicebot.azurewebsites.net/api/messages",
+      "type": "endpoint",
+      "name": "production",
+      "id": "4"
+    },
+    {
+      "instrumentationKey": "QLxTgt75rIWNHPt2IFzcew==!nFNe4UgkDrLCuviOvD2mDmqfgbuDigfiM0v7ZN4EvDyvle4Hu8ORnJHkO/Q5n8Xr",
+      "applicationId": "48c3a417-2784-4104-8698-ecda53accd55",
+      "apiKeys": {},
+      "tenantId": "20f62116-4d0c-44ac-8a45-390ca2765601",
+      "subscriptionId": "47516a6e-0e53-4019-9871-3cacea620f8e",
+      "resourceGroup": "CustomerServiceRessources",
+      "serviceName": "SqliCustomerServiceBot5voxxo",
+      "type": "appInsights",
+      "id": "5"
+    },
+    {
+      "appId": "05c63698-6b04-4821-bc30-816ef0ddae78",
+      "authoringKey": "yyBVXsBHZIEhqvaVCBBcaQ==!IbJrxnCG1Qkk2RB1cja9+XZI8RHM/yQbl28jQQvk0q4f2Jd0GU6L9zo5LT/RkfjQ",
+      "version": "0.1",
+      "region": "westus",
+      "type": "luis",
+      "name": "BasicBotLuisApplication",
+      "id": "6"
+    }
+  ]
+}
